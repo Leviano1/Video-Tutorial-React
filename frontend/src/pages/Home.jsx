@@ -1,22 +1,52 @@
 {/*../ because we need to go back one level*/}
 import MovieCard from "../components/MovieCard"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {searchMovies, getPopularMovies} from "../services/api";
 import "../css/Home.css"
 
 function Home(){
     const [searchQuery, setSearchQuery] = useState("");
     /*searchQuery - defines the state, setSearchQuery - a function to update the state */
+    const [movies, setMovies] = useState([]);
+    /*allows to add side effects to the functions and define when they should run */
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const movies = [
-        {id: 1, title: "John Wick", release_date: "2020"},
-        {id: 1, title: "Terminator", release_date: "1999"},
-        {id: 1, title: "The Matrix", release_date: "1998"},
-    ];
+    useEffect(() => {
+        const loadPopularMovies = async () => {
+            try {
+                const popularMovies = await getPopularMovies()
+                setMovies(popularMovies)
+            } catch (err) {
+                console.log(err)
+                setError("Failed to load movies...")
+            }
+            finally {
+                setLoading(false)
+            }
+        }
 
-    const handleSearch = (e) => {
+        loadPopularMovies()
+    }, [])
+
+    const handleSearch = async (e) => {
         e.preventDefault();
         /*text typed in the textbox stays, withought getting refreshed.*/
-        alert(searchQuery)
+        if (!searchQuery.trim()) return /*trim - removes trailing spaces from the string */
+        if(loading) return
+        setLoading(true)
+        try {
+            const searchResults = await searchMovies(searchQuery)
+            setMovies(searchResults)
+            setError(null)
+        } catch (err) {
+            console.log(err)
+            setError("Failed to search movies...")
+        } finally {
+            setLoading(false)
+        }
+
+        setSearchQuery("");
     };
 
     return (
@@ -32,6 +62,12 @@ function Home(){
                 />
                 <button type="submit" className="search-button">Search</button>
             </form>
+
+                {error && <div className="error-message">{error}</div>}
+
+        {loading ? (
+            <div className="loading">Loading...</div>
+        ) : (
         <div className="movies-grid">
             {movies.map(
                 (movie) => (
@@ -41,6 +77,7 @@ function Home(){
                 )
             ))}
         </div>
+        )}
     </div>
     );
 }
