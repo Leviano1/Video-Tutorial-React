@@ -30,3 +30,6 @@ A React movie-discovery application.
 - Go to the `frontend` folder.
 - Install dependencies: "npm.cmd install".
 - Start the development server: "npm.cmd run dev".
+
+## Resources
+- API Website: https://www.themoviedb.org/
