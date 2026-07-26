@@ -1,9 +1,12 @@
 # Movie App
 
-![Home page](./screenshots/home.png)
+![Home Page](./screenshots/home.png)
 
+A React movie discovery application that allows users to browse popular movies, search by title, and save favourite movies using the TMDB API.
 
-A React movie-discovery application.
+## Live Demo
+
+[View Live Demo](https://react-movie-app-five-flax.vercel.app)
 
 ## Features
 
@@ -26,9 +29,10 @@ A React movie-discovery application.
 ## Run Locally
 
 - Clone the repository.
-- Open  Windows PowerShell.
+- Open Windows PowerShell.
+- Navigate to the project directory.
 - Install dependencies: `npm.cmd install`.
 - Start the development server: `npm.cmd run dev`.
 
 ## Resources
-- API Website: https://www.themoviedb.org/
+- [TMDB API](https://www.themoviedb.org/)
