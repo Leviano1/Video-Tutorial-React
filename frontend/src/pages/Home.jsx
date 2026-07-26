@@ -45,8 +45,6 @@ function Home(){
         } finally {
             setLoading(false)
         }
-
-        setSearchQuery("");
     };
 
     return (
@@ -71,11 +69,10 @@ function Home(){
         <div className="movies-grid">
             {movies.map(
                 (movie) => (
-                    movie.title.toLowerCase().startsWith(searchQuery) && (
                         <MovieCard movie={movie} key={movie.id} />
                 /*.map function iterates through all our mivies values*/
                 )
-            ))}
+            )}
         </div>
         )}
     </div>
